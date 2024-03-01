@@ -42,6 +42,12 @@ else:
     all_movies = query_db(sql_query, conn)
     all_movies.to_csv('all_movies.csv', index=False)
 
+# Remove all movies where title is null
+all_movies = all_movies[all_movies['title'].notnull()]
+all_movies = all_movies.where(pd.notnull(all_movies), None)
+print(all_movies.head())
+
+
 
 
 
