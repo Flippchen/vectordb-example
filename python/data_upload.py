@@ -48,7 +48,20 @@ all_movies = all_movies.where(pd.notnull(all_movies), None)
 print(all_movies.head())
 
 
+# Connect to redis
+client = redis.Redis(host="localhost", port=6379, decode_responses=True)
 
+res = client.ping()
+print("Connection successfully:", res)
 
+# Upload to redis
+pipeline = client.pipeline()
+for i, movie in all_movies.iterrows():
+    redis_key = f"movies:{i:03}"
+    pipeline.json().set(redis_key, "$", movie.to_dict())
 
+res = pipeline.execute()
 
+# Get from redis one result
+result = client.json().get("movies:001")
+print("First movies:", result)
