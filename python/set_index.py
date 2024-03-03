@@ -68,6 +68,3 @@ indexing_failures = info["hash_indexing_failures"]
 num_docs = info["num_docs"]
 print(f"Number of documents: {num_docs}")
 print(f"Indexing failures: {indexing_failures}")
-
-
-

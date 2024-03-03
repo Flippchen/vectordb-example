@@ -1,18 +1,7 @@
 import os
-
-import numpy as np
 import psycopg2
 import pandas as pd
 import redis
-from redis.commands.search.field import (
-    NumericField,
-    TagField,
-    TextField,
-    VectorField
-)
-from redis.commands.search.indexDefinition import IndexDefinition, IndexType
-from sentence_transformers import SentenceTransformer
-import time
 
 db_params = {
     'dbname': 'movie_db',
