@@ -24,3 +24,50 @@ print("Connection successfully:", res)
 embedder = SentenceTransformer("msmarco-distilbert-base-v4")
 
 
+def create_query_table(query, queries, encoded_queries, extra_params={}):
+    results_list = []
+    for i, encoded_query in enumerate(encoded_queries):
+        result_docs = (
+            client.ft("idx:movies_vss")
+            .search(
+                query,
+                {
+                    "query_vector": np.array(
+                        encoded_query, dtype=np.float32
+                    ).tobytes()
+                }
+                | extra_params,
+            )
+            .docs
+        )
+        for doc in result_docs:
+            vector_score = round(1 - float(doc.vector_score), 2)
+            results_list.append(
+                {
+                    "query": queries[i],
+                    "score": vector_score,
+                    "id": doc.id,
+                    "title": doc.title,
+                    "overview": doc.overview,
+                    "runtime": doc.runtime,
+                    "budget": doc.budget,
+                    "revenue": doc.revenue,
+                }
+            )
+
+    # Optional: convert the table to Markdown using Pandas
+    queries_table = pd.DataFrame(results_list)
+    queries_table.sort_values(
+        by=["query", "score"], ascending=[True, False], inplace=True
+    )
+    queries_table["query"] = queries_table.groupby("query")["query"].transform(
+        lambda x: [x.iloc[0]] + [""] * (len(x) - 1)
+    )
+    queries_table["overview"] = queries_table["overview"].apply(
+        lambda x: (x[:497] + "...") if len(x) > 500 else x
+    )
+    queries_table.to_markdown(index=False)
+
+    return queries_table
+
+
