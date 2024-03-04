@@ -71,3 +71,22 @@ def create_query_table(query, queries, encoded_queries, extra_params={}):
     return queries_table
 
 
+number_of_neighbors = 4
+query = (
+    Query(f"(*)=>[KNN {number_of_neighbors} @title_embeddings $query_vector AS vector_score]")
+    .sort_by("vector_score")
+    .return_fields("vector_score", "id", "title", "overview", "runtime", "budget", "revenue")
+    .dialect(2)
+)
+queries = [
+    "Star Wars",
+    "Harry Potter",
+    "French",
+    "Toast",
+    "The Lord of the Rings",
+]
+encoded_queries = embedder.encode(queries).astype(np.float32).tolist()
+table = create_query_table(query, queries, encoded_queries)
+
+print(table)
+table.to_csv("query_results.csv", index=False)
