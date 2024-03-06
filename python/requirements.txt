@@ -1,0 +1,6 @@
+redis
+pandas
+sentence-transformers
+tabulate
+numpy
+sycopg2-binary
