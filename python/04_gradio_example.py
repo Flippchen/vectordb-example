@@ -17,3 +17,8 @@ print("Connection successfully:", res)
 keys = sorted(client.keys("movies:*"))
 
 embedder = SentenceTransformer("msmarco-distilbert-base-v4")
+
+
+def to_float_list(string):
+    return [float(i) for i in ast.literal_eval(string)]
+
