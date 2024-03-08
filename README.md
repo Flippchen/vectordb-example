@@ -19,6 +19,6 @@ This repository contains the code for my presentation about vector databases. Th
 - [x] Fill with data
 - [x] Create Index
 - [x] Query
-- [ ] Create a Gradio example
+- [x] Create a Gradio example
 - [ ] Create everything in Rust
 - [ ] Finish Readme(images, etc)
