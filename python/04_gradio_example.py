@@ -102,3 +102,27 @@ def create_plot(embeddings_table, perplexity_value):
     return fig
 
 
+def find_similar_movies(query, num_results):
+    if query is None or query == "":
+        return pd.DataFrame(columns=["score", "title", "runtime", "budget", "revenue", "overview"])
+
+    # Create encoded query
+    queries = [query]
+    encoded_queries = embedder.encode(queries).astype(np.float32).tolist()
+
+    # Create table
+    table = create_query_table(encoded_queries, num_results)
+
+    # Extract embeddings and add query to the table
+    embeddings_table = table[["title", "title_embeddings", "score"]]
+    embeddings_table['title_embeddings'] = embeddings_table['title_embeddings'].apply(to_float_list)
+    embeddings_table.loc[-1] = [query, encoded_queries[0], 1]  # adding a row
+
+    # Plot 3D visualization
+    figure = create_plot(embeddings_table, num_results)
+
+    # Remove title_embeddings from the table for better visualization
+    table.drop(columns=["title_embeddings"], inplace=True)
+
+    return table, figure
+
