@@ -67,3 +67,38 @@ def create_query_table(encoded_queries, num_results):
     return queries_table
 
 
+def create_plot(embeddings_table, perplexity_value):
+    tsne = TSNE(n_components=3, random_state=0, perplexity=perplexity_value - 1)
+    embeddings = np.array(embeddings_table["title_embeddings"].tolist())
+    embeddings_3d = tsne.fit_transform(embeddings)
+
+    fig = go.Figure(
+        data=[
+            go.Scatter3d(
+                x=embeddings_3d[:, 0],
+                y=embeddings_3d[:, 1],
+                z=embeddings_3d[:, 2],
+                mode="markers",
+                marker=dict(
+                    size=5,
+                    color=embeddings_table["score"],
+                    colorscale="Viridis",
+                    opacity=0.8,
+                ),
+                text=embeddings_table["title"],
+            )
+        ]
+    )
+
+    fig.update_layout(
+        margin=dict(l=0, r=0, b=0, t=0),
+        scene=dict(
+            xaxis_title="X",
+            yaxis_title="Y",
+            zaxis_title="Z",
+        ),
+    )
+
+    return fig
+
+
