@@ -146,7 +146,7 @@ with gr.Blocks() as iface:
     with gr.Row():
         movie_title = gr.Textbox(label="Enter a Movie Title")
         num_similar = gr.Slider(minimum=1, maximum=50, label="Number of most Similar Movies", step=1, value=5)
-        submit_btn = gr.Button("Submit")
+        submit_btn = gr.Button("Submit", variant="primary")
         visualization_plot = gr.Plot(label="Visualization Plot", min_width=800)
 
     with gr.Row():
