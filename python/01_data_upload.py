@@ -7,7 +7,7 @@ db_params = {
     'dbname': 'movie_db',
     'user': 'postgres',
     'password': os.environ['POSTGRES_PASSWORD'],
-    'host': '49.13.1.33',
+    'host': os.environ['POSTGRES_HOST'],
     'port': '5333'
 }
 
