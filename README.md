@@ -12,23 +12,22 @@ This repository contains the code for my presentation about vector databases. Th
 ```bash
 ./setup.bash
 ```
+2. Run the Python example
+```bash
+cd python
+python3 01_data_upload.py
+```
+or any other example by changing the name.
 
-# TODO: Index Command/rust
-FT.CREATE idx:bikes_vss ON JSON
-PREFIX 1 bikes: SCORE 1.0
-SCHEMA
-$.model TEXT WEIGHT 1.0 NOSTEM
-$.brand TEXT WEIGHT 1.0 NOSTEM
-$.price NUMERIC
-$.type TAG SEPARATOR ","
-$.description AS description TEXT WEIGHT 1.0
-$.description_embeddings AS vector VECTOR FLAT 6 TYPE FLOAT32 DIM 768 DISTANCE_METRIC COSINE
+2. The rust examples
 
-# TODOS
-- [x] Create a Redis instance
-- [x] Fill with data
-- [x] Create Index
-- [x] Query
-- [x] Create a Gradio example
-- [ ] Create everything in Rust
-- [ ] Finish Readme(images, etc)
+```bash
+cd rust
+cargo run --bin 01_data_upload
+```
+or any other example by changing the name.
+For the rust examples you also need to create the index manually. You can do this by running the corresponding python script.
+
+
+# Where does the data come from?
+The data is from the [The Movie Database](https://www.themoviedb.org/?language=de) dataset. It is a collection of food products from around the world. The data is licensed under the Open Database License. The data was downloaded for a university project in [MovieVerse](https://github.com/ConnActivity/MovieVerse).
