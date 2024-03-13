@@ -15,6 +15,7 @@ This repository contains the code for my presentation about vector databases. Th
 2. Run the Python example
 ```bash
 cd python
+pip install -r requirements.txt
 python3 01_data_upload.py
 ```
 or any other example by changing the name.

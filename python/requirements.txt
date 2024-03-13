@@ -5,3 +5,4 @@ tabulate
 numpy
 sycopg2-binary
 gradio
+plotly
