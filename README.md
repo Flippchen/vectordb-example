@@ -2,6 +2,8 @@
 
 This repository contains the code for my presentation about vector databases. The presentation uses the Redis stack.
 
+<img alt="Screenshot of the Web UI" src="assets/gradio_example.png"  height="1000">
+
 ## Prerequisites
 - Docker
 - Python >=3.8 or Rust >=1.5
